@@ -71,9 +71,6 @@ class CustomizationActivity : BaseSimpleActivity() {
         updateLabelColors(textColor)
         originalAppIconColor = baseConfig.appIconColor
 
-        if (resources.getBoolean(R.bool.hide_google_relations)) {
-            apply_to_all_holder.beGone()
-        }
     }
 
     override fun onResume() {
@@ -168,16 +165,11 @@ class CustomizationActivity : BaseSimpleActivity() {
             if (baseConfig.wasAppIconCustomizationWarningShown) {
                 themePickerClicked()
             } else {
-                ConfirmationDialog(this, "", R.string.app_icon_color_warning, R.string.ok, 0) {
-                    baseConfig.wasAppIconCustomizationWarningShown = true
-                    themePickerClicked()
-                }
+
             }
         }
 
-        if (customization_theme.value == getString(R.string.system_default)) {
-            apply_to_all_holder.beGone()
-        }
+
     }
 
     private fun themePickerClicked() {
@@ -194,9 +186,7 @@ class CustomizationActivity : BaseSimpleActivity() {
             }
 
             val hideGoogleRelations = resources.getBoolean(R.bool.hide_google_relations)
-            apply_to_all_holder.beVisibleIf(
-                curSelectedThemeId != THEME_AUTO && curSelectedThemeId != THEME_SYSTEM && curSelectedThemeId != THEME_SHARED && !hideGoogleRelations
-            )
+
             updateMenuItemColors(menu, true, getCurrentStatusBarColor())
         }
     }
@@ -425,7 +415,6 @@ class CustomizationActivity : BaseSimpleActivity() {
         customization_background_color.setFillWithStroke(backgroundColor, backgroundColor)
         customization_app_icon_color.setFillWithStroke(curAppIconColor, backgroundColor)
         customization_navigation_bar_color.setFillWithStroke(curNavigationBarColor, backgroundColor)
-        apply_to_all.setTextColor(primaryColor.getContrastColor())
 
         customization_text_color_holder.setOnClickListener { pickTextColor() }
         customization_background_color_holder.setOnClickListener { pickBackgroundColor() }
@@ -434,18 +423,12 @@ class CustomizationActivity : BaseSimpleActivity() {
 
         handleAccentColorLayout()
         customization_navigation_bar_color_holder.setOnClickListener { pickNavigationBarColor() }
-        apply_to_all.setOnClickListener {
-            applyToAll()
-        }
 
         customization_app_icon_color_holder.setOnClickListener {
             if (baseConfig.wasAppIconCustomizationWarningShown) {
                 pickAppIconColor()
             } else {
-                ConfirmationDialog(this, "", R.string.app_icon_color_warning, R.string.ok, 0) {
-                    baseConfig.wasAppIconCustomizationWarningShown = true
-                    pickAppIconColor()
-                }
+
             }
         }
     }
@@ -476,11 +459,9 @@ class CustomizationActivity : BaseSimpleActivity() {
 
     private fun updateApplyToAllColors(newColor: Int) {
         if (newColor == baseConfig.primaryColor && !baseConfig.isUsingSystemTheme) {
-            apply_to_all.setBackgroundResource(R.drawable.button_background_rounded)
         } else {
             val applyBackground = resources.getDrawable(R.drawable.button_background_rounded, theme) as RippleDrawable
             (applyBackground as LayerDrawable).findDrawableByLayerId(R.id.button_background_holder).applyColorFilter(newColor)
-            apply_to_all.background = applyBackground
         }
     }
 
@@ -595,23 +576,6 @@ class CustomizationActivity : BaseSimpleActivity() {
 
     private fun getUpdatedTheme() = if (curSelectedThemeId == THEME_SHARED) THEME_SHARED else getCurrentThemeId()
 
-    private fun applyToAll() {
-        ConfirmationDialog(this, "", R.string.share_colors_success, R.string.ok, 0) {
-            Intent().apply {
-                action = MyContentProvider.SHARED_THEME_ACTIVATED
-                sendBroadcast(this)
-            }
-
-            if (!predefinedThemes.containsKey(THEME_SHARED)) {
-                predefinedThemes[THEME_SHARED] = MyTheme(R.string.shared, 0, 0, 0, 0)
-            }
-            baseConfig.wasSharedThemeEverActivated = true
-            apply_to_all_holder.beGone()
-            updateColorTheme(THEME_SHARED)
-            saveChanges(false)
-        }
-    }
-
     private fun updateLabelColors(textColor: Int) {
         arrayListOf<MyTextView>(
             customization_theme_label,
@@ -627,7 +591,6 @@ class CustomizationActivity : BaseSimpleActivity() {
         }
 
         val primaryColor = getCurrentPrimaryColor()
-        apply_to_all.setTextColor(primaryColor.getContrastColor())
         updateApplyToAllColors(primaryColor)
     }
 

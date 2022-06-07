@@ -1620,9 +1620,7 @@ fun Activity.isAppSideloaded(): Boolean {
 }
 
 fun Activity.showSideloadingDialog() {
-    AppSideloadedDialog(this) {
-        finish()
-    }
+
 }
 
 fun BaseSimpleActivity.getTempFile(folderName: String, fileName: String): File? {
