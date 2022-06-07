@@ -13,12 +13,11 @@ android {
     compileSdkVersion 31
 
     defaultConfig {
-        applicationId "com.simplemobiletools.notes.pro"
+        applicationId "com.note.daily.keep"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 100
         versionName "1.0.0"
-        setProperty("archivesBaseName", "notes")
     }
 
     signingConfigs {

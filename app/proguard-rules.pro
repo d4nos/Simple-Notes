@@ -1,3 +1,3 @@
--keep class com.simplemobiletools.notes.pro.models.ChecklistItem {
+-keep class com.note.daily.keep.models.ChecklistItem {
     <fields>;
 }
