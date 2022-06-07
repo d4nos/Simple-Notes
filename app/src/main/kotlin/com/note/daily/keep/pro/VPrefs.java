@@ -2,22 +2,22 @@ package com.note.daily.keep.pro;
 
 import android.content.Context;
 
-public class ProPrefs extends ProData {
+public class VPrefs extends VData {
 
     private static final String K_LOCAL_PURCHASED = "local_purchased";
     private static final String K_LOCAL_SUBSCRIBED = "local_subscribed";
 
-    private static ProPrefs instance;
+    private static VPrefs instance;
 
-    private ProPrefs(Context context) {
-        super(context, "notes");
+    private VPrefs(Context context) {
+        super(context, "snotes");
     }
 
     public static void init(Context context) {
-        instance = new ProPrefs(context);
+        instance = new VPrefs(context);
     }
 
-    public static ProPrefs get() {
+    public static VPrefs get() {
         if (instance == null) {
             throw new NullPointerException("Initialization require!");
         }

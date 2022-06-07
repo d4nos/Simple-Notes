@@ -17,7 +17,7 @@
             android:adjustViewBounds="true"
             android:background="?selectableItemBackgroundBorderless"
             android:padding="4dp"
-            app:srcCompat="@drawable/pro_premium" />
+            app:srcCompat="@drawable/v_premium" />
 
         <include
             android:id="@+id/search_wrapper"

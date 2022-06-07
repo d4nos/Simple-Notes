@@ -35,7 +35,7 @@ import com.note.daily.keep.ext.*
 import com.note.daily.keep.f.TextFragment
 import com.note.daily.keep.h.*
 import com.note.daily.keep.m.Note
-import com.note.daily.keep.pro.ProActivity
+import com.note.daily.keep.pro.VActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.FileOutputStream
@@ -101,7 +101,7 @@ class MainActivity : SimpleActivity() {
 
         checkAppOnSDCard()
         setupSearchButtons()
-        pro.setOnClickListener { ProActivity.open(this) }
+        pro.setOnClickListener { VActivity.open(this) }
 
     }
 

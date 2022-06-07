@@ -1,6 +1,6 @@
 package com.note.daily.keep.pro;
 
-public interface PurchaseCallback {
+public interface VCallback {
     void purchaseSuccessfully();
 
     void purchaseFail();

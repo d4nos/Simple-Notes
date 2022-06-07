@@ -5,11 +5,11 @@ import android.content.SharedPreferences;
 
 import java.util.Set;
 
-public abstract class ProData {
+public abstract class VData {
     protected final Context context;
     private final SharedPreferences pref;
 
-    protected ProData(Context context, String name) {
+    protected VData(Context context, String name) {
         this.context = context;
         this.pref = context.getSharedPreferences(name, Context.MODE_PRIVATE);
     }

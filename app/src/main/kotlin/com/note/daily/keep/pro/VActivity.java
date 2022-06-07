@@ -18,10 +18,10 @@ import com.note.daily.keep.R;
 
 import java.util.Locale;
 
-public class ProActivity extends ProBaseActivity {
+public class VActivity extends VBaseActivity {
 
     public static void open(Context context) {
-        context.startActivity(new Intent(context, ProActivity.class));
+        context.startActivity(new Intent(context, VActivity.class));
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ProActivity extends ProBaseActivity {
     @Override
     protected void initViews(Bundle savedInstanceState) {
         findViewById(R.id.bt_close).setOnClickListener(view -> finish());
-        ProHelper.getInstance().initBilling(this, new BillingClientStateListener() {
+        VHelper.getInstance().initBilling(this, new BillingClientStateListener() {
             @Override
             public void onBillingServiceDisconnected() {
 
@@ -49,12 +49,12 @@ public class ProActivity extends ProBaseActivity {
     }
 
     private void initPack() {
-        ProHelper pHelper = ProHelper.getInstance();
+        VHelper pHelper = VHelper.getInstance();
         for (int i = 1; i <= 4; i++) {
             try {
                 View layoutPack = findViewByName("layout_pack_" + i);
                 layoutPack.setSelected(true);
-                String packString = BuildConfig.DEBUG ? ProHelper.DRAW_PRO_TEST : "pack_" + i;
+                String packString = BuildConfig.DEBUG ? VHelper.NOTE_PRO_TEST : "pack_" + i;
                 layoutPack.setOnClickListener(view -> {
                     pHelper.purchase(this, packString);
                 });
@@ -62,7 +62,7 @@ public class ProActivity extends ProBaseActivity {
                 String titleViewIdString = String.format(Locale.US, "tv_pack_%d_price", i);
                 TextView tvPrice = (TextView) findViewByName(titleViewIdString);
                 tvPrice.setSelected(layoutPack.isSelected());
-                String price = ProHelper.getInstance().getPrice(packString);
+                String price = VHelper.getInstance().getPrice(packString);
                 tvPrice.setText(price);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -77,6 +77,6 @@ public class ProActivity extends ProBaseActivity {
 
     @Override
     protected int onLayout() {
-        return R.layout.activity_pro;
+        return R.layout.activity_v;
     }
 }

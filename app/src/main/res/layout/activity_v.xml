@@ -7,6 +7,13 @@
     android:background="@color/white">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/v_bg" />
+
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/bt_close"
         android:layout_width="32dp"
         android:layout_height="32dp"
@@ -25,7 +32,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pro_premium" />
+        app:srcCompat="@drawable/v_premium" />
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -33,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="100dp"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/iv_vip">
 
@@ -42,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/pro_selector"
+            android:background="@drawable/v_selector"
             android:orientation="vertical"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
@@ -58,8 +65,8 @@
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:lines="2"
-                android:text="VIP 1"
-                android:textColor="@drawable/pro_selector_text"
+                android:text="PRO 1"
+                android:textColor="@drawable/v_selector_text"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -68,12 +75,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@drawable/pro_selector_text"
+                android:textColor="@drawable/v_selector_text"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="0$/week" />
+                tools:text="0$" />
 
 
         </LinearLayout>
@@ -84,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_weight="1"
-            android:background="@drawable/pro_selector"
+            android:background="@drawable/v_selector"
             android:orientation="vertical"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
@@ -100,8 +107,8 @@
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:lines="2"
-                android:text="VIP 2"
-                android:textColor="@drawable/pro_selector_text"
+                android:text="PRO 2"
+                android:textColor="@drawable/v_selector_text"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -110,12 +117,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@drawable/pro_selector_text"
+                android:textColor="@drawable/v_selector_text"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="0$/week" />
+                tools:text="0$" />
 
 
         </LinearLayout>
@@ -135,7 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/pro_selector"
+            android:background="@drawable/v_selector"
             android:orientation="vertical"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
@@ -151,8 +158,8 @@
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:lines="2"
-                android:text="VIP 3"
-                android:textColor="@drawable/pro_selector_text"
+                android:text="PRO 3"
+                android:textColor="@drawable/v_selector_text"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -161,12 +168,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@drawable/pro_selector_text"
+                android:textColor="@drawable/v_selector_text"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="0$/week" />
+                tools:text="0$" />
 
 
         </LinearLayout>
@@ -177,7 +184,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_weight="1"
-            android:background="@drawable/pro_selector"
+            android:background="@drawable/v_selector"
             android:orientation="vertical"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
@@ -193,8 +200,8 @@
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:lines="2"
-                android:text="VIP 4"
-                android:textColor="@drawable/pro_selector_text"
+                android:text="PRO 4"
+                android:textColor="@drawable/v_selector_text"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -203,12 +210,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@drawable/pro_selector_text"
+                android:textColor="@drawable/v_selector_text"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="0$/week" />
+                tools:text="0$" />
 
 
         </LinearLayout>
