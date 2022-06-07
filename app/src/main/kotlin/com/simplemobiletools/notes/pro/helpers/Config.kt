@@ -16,11 +16,11 @@ class Config(context: Context) : BaseConfig(context) {
         set(autosaveNotes) = prefs.edit().putBoolean(AUTOSAVE_NOTES, autosaveNotes).apply()
 
     var displaySuccess: Boolean
-        get() = prefs.getBoolean(DISPLAY_SUCCESS, false)
+        get() = prefs.getBoolean(DISPLAY_SUCCESS, true)
         set(displaySuccess) = prefs.edit().putBoolean(DISPLAY_SUCCESS, displaySuccess).apply()
 
     var clickableLinks: Boolean
-        get() = prefs.getBoolean(CLICKABLE_LINKS, false)
+        get() = prefs.getBoolean(CLICKABLE_LINKS, true)
         set(clickableLinks) = prefs.edit().putBoolean(CLICKABLE_LINKS, clickableLinks).apply()
 
     var monospacedFont: Boolean
@@ -32,11 +32,11 @@ class Config(context: Context) : BaseConfig(context) {
         set(showKeyboard) = prefs.edit().putBoolean(SHOW_KEYBOARD, showKeyboard).apply()
 
     var showNotePicker: Boolean
-        get() = prefs.getBoolean(SHOW_NOTE_PICKER, false)
+        get() = prefs.getBoolean(SHOW_NOTE_PICKER, true)
         set(showNotePicker) = prefs.edit().putBoolean(SHOW_NOTE_PICKER, showNotePicker).apply()
 
     var showWordCount: Boolean
-        get() = prefs.getBoolean(SHOW_WORD_COUNT, false)
+        get() = prefs.getBoolean(SHOW_WORD_COUNT, true)
         set(showWordCount) = prefs.edit().putBoolean(SHOW_WORD_COUNT, showWordCount).apply()
 
     var gravity: Int
