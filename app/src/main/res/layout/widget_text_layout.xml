@@ -36,8 +36,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@null"
-        android:gravity="start"
         android:fontFamily="monospace"
+        android:gravity="start"
         android:padding="@dimen/small_margin"
         android:visibility="gone" />
 
@@ -46,8 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@null"
-        android:gravity="center_horizontal"
         android:fontFamily="monospace"
+        android:gravity="center_horizontal"
         android:padding="@dimen/small_margin"
         android:visibility="gone" />
 
@@ -56,8 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@null"
-        android:gravity="end"
         android:fontFamily="monospace"
+        android:gravity="end"
         android:padding="@dimen/small_margin"
         android:visibility="gone" />
 

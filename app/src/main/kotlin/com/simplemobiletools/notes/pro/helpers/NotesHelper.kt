@@ -1,7 +1,6 @@
 package com.simplemobiletools.notes.pro.helpers
 
 import android.content.Context
-import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import com.simplemobiletools.commons.helpers.PROTECTION_NONE
@@ -35,7 +34,7 @@ class NotesHelper(val context: Context) {
             notes.removeAll(notesToDelete)
 
             if (notes.isEmpty()) {
-                val generalNote = context.resources.getString(R.string.general_note)
+                val generalNote = context.resources.getString(R.string.my_notes)
                 val note = Note(null, generalNote, "", NoteType.TYPE_TEXT.value, "", PROTECTION_NONE, "")
                 context.notesDB.insertOrUpdate(note)
                 notes.add(note)

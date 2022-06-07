@@ -172,7 +172,6 @@ class MainActivity : SimpleActivity() {
             findItem(R.id.remove_done_items).isVisible = isCurrentItemChecklist
             findItem(R.id.sort_checklist).isVisible = isCurrentItemChecklist
             findItem(R.id.import_folder).isVisible = !isQPlus()
-            findItem(R.id.import_notes).isVisible = isQPlus()
 
             saveNoteButton = findItem(R.id.save_note)
             saveNoteButton!!.isVisible = !config.autosaveNotes && showSaveButton && mCurrentNote.type == NoteType.TYPE_TEXT.value
@@ -200,9 +199,7 @@ class MainActivity : SimpleActivity() {
             R.id.open_file -> tryOpenFile()
             R.id.import_folder -> openFolder()
             R.id.save_as -> fragment?.handleUnlocking { tryExportAsFile() }
-            R.id.import_notes -> tryImportNotes()
             R.id.delete_note -> fragment?.handleUnlocking { displayDeleteNotePrompt() }
-            R.id.settings -> launchSettings()
             R.id.remove_done_items -> fragment?.handleUnlocking { removeDoneItems() }
             R.id.sort_checklist -> fragment?.handleUnlocking { displaySortChecklistDialog() }
             else -> return super.onOptionsItemSelected(item)
@@ -597,11 +594,6 @@ class MainActivity : SimpleActivity() {
         }
     }
 
-    private fun launchSettings() {
-        hideKeyboard()
-        startActivity(Intent(applicationContext, SettingsActivity::class.java))
-    }
-
     private fun tryOpenFile() {
         hideKeyboard()
         if (hasPermission(PERMISSION_READ_STORAGE)) {
@@ -851,21 +843,6 @@ class MainActivity : SimpleActivity() {
                 }
 
                 toast(toastId)
-            }
-        }
-    }
-
-    private fun tryImportNotes() {
-        Intent(Intent.ACTION_GET_CONTENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = EXPORT_MIME_TYPE
-
-            try {
-                startActivityForResult(this, PICK_IMPORT_NOTES_INTENT)
-            } catch (e: ActivityNotFoundException) {
-                toast(R.string.system_service_disabled, Toast.LENGTH_LONG)
-            } catch (e: Exception) {
-                showErrorToast(e)
             }
         }
     }

@@ -56,7 +56,7 @@ abstract class NotesDatabase : RoomDatabase() {
 
         private fun insertFirstNote(context: Context) {
             Executors.newSingleThreadScheduledExecutor().execute {
-                val generalNote = context.resources.getString(R.string.general_note)
+                val generalNote = context.resources.getString(R.string.my_notes)
                 val note = Note(null, generalNote, "", NoteType.TYPE_TEXT.value, "", PROTECTION_NONE, "")
                 db!!.NotesDao().insertOrUpdate(note)
             }
