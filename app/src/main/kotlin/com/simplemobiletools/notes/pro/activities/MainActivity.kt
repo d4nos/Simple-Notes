@@ -3,15 +3,12 @@ package com.simplemobiletools.notes.pro.activities
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.graphics.drawable.Icon
 import android.graphics.drawable.LayerDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.print.PrintAttributes
-import android.print.PrintManager
 import android.text.method.ArrowKeyMovementMethod
 import android.text.method.LinkMovementMethod
 import android.util.TypedValue
@@ -20,16 +17,12 @@ import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.simplemobiletools.commons.dialogs.*
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
-import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.FileDirItem
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.commons.models.Release
@@ -183,8 +176,6 @@ class MainActivity : SimpleActivity() {
             findItem(R.id.sort_checklist).isVisible = isCurrentItemChecklist
             findItem(R.id.import_folder).isVisible = !isQPlus()
             findItem(R.id.import_notes).isVisible = isQPlus()
-            findItem(R.id.lock_note).isVisible = mNotes.isNotEmpty() && !mCurrentNote.isLocked()
-            findItem(R.id.unlock_note).isVisible = mNotes.isNotEmpty() && mCurrentNote.isLocked()
 
             saveNoteButton = findItem(R.id.save_note)
             saveNoteButton!!.isVisible = !config.autosaveNotes && showSaveButton && mCurrentNote.type == NoteType.TYPE_TEXT.value
@@ -209,18 +200,14 @@ class MainActivity : SimpleActivity() {
             R.id.new_note -> displayNewNoteDialog()
             R.id.rename_note -> fragment?.handleUnlocking { displayRenameDialog() }
             R.id.share -> fragment?.handleUnlocking { shareText() }
-            R.id.lock_note -> lockNote()
-            R.id.unlock_note -> unlockNote()
             R.id.open_file -> tryOpenFile()
             R.id.import_folder -> openFolder()
             R.id.export_as_file -> fragment?.handleUnlocking { tryExportAsFile() }
             R.id.export_all_notes -> tryExportAllNotes()
             R.id.export_notes -> tryExportNotes()
             R.id.import_notes -> tryImportNotes()
-            R.id.print -> fragment?.handleUnlocking { printText() }
             R.id.delete_note -> fragment?.handleUnlocking { displayDeleteNotePrompt() }
             R.id.settings -> launchSettings()
-            R.id.about -> launchAbout()
             R.id.remove_done_items -> fragment?.handleUnlocking { removeDoneItems() }
             R.id.sort_checklist -> fragment?.handleUnlocking { displaySortChecklistDialog() }
             else -> return super.onOptionsItemSelected(item)
@@ -228,7 +215,6 @@ class MainActivity : SimpleActivity() {
         return true
     }
 
-    // https://code.google.com/p/android/issues/detail?id=191430 quickfix
     override fun onActionModeStarted(mode: ActionMode?) {
         super.onActionModeStarted(mode)
         if (wasInit) {
@@ -619,24 +605,6 @@ class MainActivity : SimpleActivity() {
     private fun launchSettings() {
         hideKeyboard()
         startActivity(Intent(applicationContext, SettingsActivity::class.java))
-    }
-
-    private fun launchAbout() {
-        val licenses = LICENSE_RTL
-
-        val faqItems = arrayListOf(
-            FAQItem(R.string.faq_1_title_commons, R.string.faq_1_text_commons),
-            FAQItem(R.string.faq_1_title, R.string.faq_1_text)
-        )
-
-        if (!resources.getBoolean(R.bool.hide_google_relations)) {
-            faqItems.add(FAQItem(R.string.faq_2_title_commons, R.string.faq_2_text_commons))
-            faqItems.add(FAQItem(R.string.faq_6_title_commons, R.string.faq_6_text_commons))
-            faqItems.add(FAQItem(R.string.faq_7_title_commons, R.string.faq_7_text_commons))
-            faqItems.add(FAQItem(R.string.faq_10_title_commons, R.string.faq_10_text_commons))
-        }
-
-        startAboutActivity(R.string.app_name, licenses, BuildConfig.VERSION_NAME, faqItems, true)
     }
 
     private fun tryOpenFile() {
@@ -1134,32 +1102,6 @@ class MainActivity : SimpleActivity() {
         }
     }
 
-    private fun printText() {
-        try {
-            val webView = WebView(this)
-            webView.webViewClient = object : WebViewClient() {
-                override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest) = false
-
-                override fun onPageFinished(view: WebView, url: String) {
-                    createWebPrintJob(view)
-                }
-            }
-
-            webView.loadData(getPrintableText().replace("#", "%23"), "text/plain", "UTF-8")
-        } catch (e: Exception) {
-            showErrorToast(e)
-        }
-    }
-
-    private fun createWebPrintJob(webView: WebView) {
-        val jobName = mCurrentNote.title
-        val printAdapter = webView.createPrintDocumentAdapter(jobName)
-
-        (getSystemService(Context.PRINT_SERVICE) as? PrintManager)?.apply {
-            print(jobName, printAdapter, PrintAttributes.Builder().build())
-        }
-    }
-
     private fun getPagerAdapter() = view_pager.adapter as NotesPagerAdapter
 
     private fun getCurrentNoteText() = getPagerAdapter().getCurrentNoteViewText(view_pager.currentItem)
@@ -1169,18 +1111,6 @@ class MainActivity : SimpleActivity() {
             getCurrentNoteText() ?: ""
         } else {
             getPagerAdapter().getNoteChecklistItems(view_pager.currentItem) ?: ""
-        }
-    }
-
-    private fun getPrintableText(): String {
-        return if (mCurrentNote.type == NoteType.TYPE_TEXT.value) {
-            getCurrentNoteText() ?: ""
-        } else {
-            var printableText = ""
-            getPagerAdapter().getNoteChecklistRawItems(view_pager.currentItem)?.forEach {
-                printableText += "${it.title}\n\n"
-            }
-            printableText
         }
     }
 
@@ -1297,28 +1227,6 @@ class MainActivity : SimpleActivity() {
             type = "text/plain"
             startActivity(Intent.createChooser(this, shareTitle))
         }
-    }
-
-    private fun lockNote() {
-        ConfirmationDialog(this, "", R.string.locking_warning, R.string.ok, R.string.cancel) {
-            SecurityDialog(this, "", SHOW_ALL_TABS) { hash, type, success ->
-                if (success) {
-                    mCurrentNote.protectionHash = hash
-                    mCurrentNote.protectionType = type
-                    NotesHelper(this).insertOrUpdateNote(mCurrentNote) {
-                        invalidateOptionsMenu()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun unlockNote() {
-        performSecurityCheck(
-            protectionType = mCurrentNote.protectionType,
-            requiredHash = mCurrentNote.protectionHash,
-            successCallback = { _, _ -> removeProtection(mCurrentNote) }
-        )
     }
 
     private fun removeProtection(note: Note) {
