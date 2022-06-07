@@ -1,3 +1,3 @@
--keep class com.note.daily.keep.models.ChecklistItem {
+-keep class com.note.daily.keep.m.ChecklistItem {
     <fields>;
 }

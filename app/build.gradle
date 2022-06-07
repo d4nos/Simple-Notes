@@ -3,12 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-def keystorePropertiesFile = rootProject.file("keystore.properties")
-def keystoreProperties = new Properties()
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-}
-
 android {
     compileSdkVersion 31
 
@@ -21,13 +15,11 @@ android {
     }
 
     signingConfigs {
-        if (keystorePropertiesFile.exists()) {
-            release {
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-                storeFile file(keystoreProperties['storeFile'])
-                storePassword keystoreProperties['storePassword']
-            }
+        config {
+            keyAlias 'notedaily'
+            keyPassword 'notedaily@!@#!@@32@##'
+            storeFile file('./keystore/keystore.jks')
+            storePassword 'notedaily@!@#!@@32@##'
         }
     }
 
@@ -38,9 +30,7 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            if (keystorePropertiesFile.exists()) {
-                signingConfig signingConfigs.release
-            }
+            signingConfig signingConfigs.config
         }
     }
 

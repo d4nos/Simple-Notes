@@ -22,7 +22,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".act.SplashActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/SplashTheme">
@@ -33,7 +33,7 @@
         </activity>
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".act.MainActivity"
             android:exported="true"
             android:launchMode="singleTask">
 
@@ -56,7 +56,7 @@
             android:label="@string/customize_colors" />
 
         <service
-            android:name=".services.WidgetService"
+            android:name=".serv.WidgetService"
             android:exported="true"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
