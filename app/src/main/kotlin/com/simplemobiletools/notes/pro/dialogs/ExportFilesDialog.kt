@@ -31,7 +31,7 @@ class ExportFilesDialog(val activity: SimpleActivity, val notes: ArrayList<Note>
                 .setPositiveButton(R.string.ok, null)
                 .setNegativeButton(R.string.cancel, null)
                 .create().apply {
-                    activity.setupDialogStuff(view, this, R.string.export_as_file) {
+                    activity.setupDialogStuff(view, this, R.string.save_as) {
                         showKeyboard(view.file_extension)
                         getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                             activity.handleSAFDialog(realPath) {

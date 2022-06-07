@@ -169,8 +169,6 @@ class MainActivity : SimpleActivity() {
             findItem(R.id.rename_note).isVisible = multipleNotesExist
             findItem(R.id.open_note).isVisible = multipleNotesExist
             findItem(R.id.delete_note).isVisible = multipleNotesExist
-            findItem(R.id.export_all_notes).isVisible = multipleNotesExist && !isQPlus()
-            findItem(R.id.export_notes).isVisible = multipleNotesExist && isQPlus()
             findItem(R.id.open_search).isVisible = !isCurrentItemChecklist
             findItem(R.id.remove_done_items).isVisible = isCurrentItemChecklist
             findItem(R.id.sort_checklist).isVisible = isCurrentItemChecklist
@@ -202,9 +200,7 @@ class MainActivity : SimpleActivity() {
             R.id.share -> fragment?.handleUnlocking { shareText() }
             R.id.open_file -> tryOpenFile()
             R.id.import_folder -> openFolder()
-            R.id.export_as_file -> fragment?.handleUnlocking { tryExportAsFile() }
-            R.id.export_all_notes -> tryExportAllNotes()
-            R.id.export_notes -> tryExportNotes()
+            R.id.save_as -> fragment?.handleUnlocking { tryExportAsFile() }
             R.id.import_notes -> tryImportNotes()
             R.id.delete_note -> fragment?.handleUnlocking { displayDeleteNotePrompt() }
             R.id.settings -> launchSettings()
@@ -845,23 +841,6 @@ class MainActivity : SimpleActivity() {
         }
     }
 
-    private fun tryExportNotes() {
-        val fileName = "${getString(R.string.notes)}_${getCurrentFormattedDateTime()}"
-        Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-            type = EXPORT_MIME_TYPE
-            putExtra(Intent.EXTRA_TITLE, fileName)
-            addCategory(Intent.CATEGORY_OPENABLE)
-
-            try {
-                startActivityForResult(this, PICK_EXPORT_NOTES_INTENT)
-            } catch (e: ActivityNotFoundException) {
-                toast(R.string.system_service_disabled, Toast.LENGTH_LONG)
-            } catch (e: Exception) {
-                showErrorToast(e)
-            }
-        }
-    }
-
     private fun exportNotesTo(outputStream: OutputStream?) {
         toast(R.string.exporting)
         ensureBackgroundThread {
@@ -951,69 +930,6 @@ class MainActivity : SimpleActivity() {
 
                     getPagerAdapter().updateCurrentNoteData(view_pager.currentItem, mCurrentNote.path, mCurrentNote.value)
                     NotesHelper(this).insertOrUpdateNote(mCurrentNote)
-                }
-            }
-        }
-    }
-
-    private fun tryExportAllNotes() {
-        handlePermission(PERMISSION_WRITE_STORAGE) {
-            if (it) {
-                exportAllNotes()
-            } else {
-                toast(R.string.no_storage_permissions)
-            }
-        }
-    }
-
-    private fun exportAllNotes() {
-        ExportFilesDialog(this, mNotes) { parent, extension ->
-            val items = arrayListOf(
-                RadioItem(EXPORT_FILE_SYNC, getString(R.string.update_file_at_note)),
-                RadioItem(EXPORT_FILE_NO_SYNC, getString(R.string.only_export_file_content))
-            )
-
-            RadioGroupDialog(this, items) {
-                val syncFile = it as Int == EXPORT_FILE_SYNC
-                var failCount = 0
-                NotesHelper(this).getNotes {
-                    mNotes = it
-                    mNotes.filter { !it.isLocked() }.forEachIndexed { index, note ->
-                        val filename = if (extension.isEmpty()) note.title else "${note.title}.$extension"
-                        val file = File(parent, filename)
-                        if (!filename.isAValidFilename()) {
-                            toast(String.format(getString(R.string.filename_invalid_characters_placeholder, filename)))
-                        } else {
-                            val noteStoredValue = note.getNoteStoredValue(this) ?: ""
-                            tryExportNoteValueToFile(file.absolutePath, mCurrentNote.title, note.value, false) { exportedSuccessfully ->
-                                if (exportedSuccessfully) {
-                                    if (syncFile) {
-                                        note.path = file.absolutePath
-                                        note.value = ""
-                                    } else {
-                                        note.path = ""
-                                        note.value = noteStoredValue
-                                    }
-
-                                    NotesHelper(this).insertOrUpdateNote(note)
-                                }
-
-                                if (mCurrentNote.id == note.id) {
-                                    mCurrentNote.value = note.value
-                                    mCurrentNote.path = note.path
-                                    getPagerAdapter().updateCurrentNoteData(view_pager.currentItem, mCurrentNote.path, mCurrentNote.value)
-                                }
-
-                                if (!exportedSuccessfully) {
-                                    failCount++
-                                }
-
-                                if (index == mNotes.size - 1) {
-                                    toast(if (failCount == 0) R.string.exporting_successful else R.string.exporting_some_entries_failed)
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
