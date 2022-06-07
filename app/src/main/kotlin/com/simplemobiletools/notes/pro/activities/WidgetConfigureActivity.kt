@@ -206,7 +206,6 @@ class WidgetConfigureActivity : SimpleActivity() {
         }
 
         storeWidgetBackground()
-        requestWidgetUpdate()
 
         Intent().apply {
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mWidgetId)
@@ -219,13 +218,6 @@ class WidgetConfigureActivity : SimpleActivity() {
         config.apply {
             widgetBgColor = mBgColor
             widgetTextColor = mTextColor
-        }
-    }
-
-    private fun requestWidgetUpdate() {
-        Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE, null, this, MyWidgetProvider::class.java).apply {
-            putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, intArrayOf(mWidgetId))
-            sendBroadcast(this)
         }
     }
 

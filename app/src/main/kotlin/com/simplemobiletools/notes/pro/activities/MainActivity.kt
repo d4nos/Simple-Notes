@@ -1073,7 +1073,6 @@ class MainActivity : SimpleActivity() {
             updateSelectedNote(firstNoteId!!)
             if (config.widgetNoteId == note.id) {
                 config.widgetNoteId = mCurrentNote.id!!
-                updateWidgets()
             }
 
             initViewPager()

@@ -1,3 +1,5 @@
 <resources>
-
+    <color name="color_primary">#E73F2E</color>
+    <color name="color_primary_dark">#E73827</color>
+    <color name="color_accent">@color/color_primary</color>
 </resources>

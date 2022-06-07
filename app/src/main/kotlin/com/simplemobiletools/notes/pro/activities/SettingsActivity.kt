@@ -11,7 +11,6 @@ import com.simplemobiletools.commons.helpers.isOreoPlus
 import com.simplemobiletools.commons.models.RadioItem
 import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.extensions.config
-import com.simplemobiletools.notes.pro.extensions.updateWidgets
 import com.simplemobiletools.notes.pro.extensions.widgetsDB
 import com.simplemobiletools.notes.pro.helpers.*
 import com.simplemobiletools.notes.pro.models.Widget
@@ -121,7 +120,6 @@ class SettingsActivity : SimpleActivity() {
         settings_monospaced_font_holder.setOnClickListener {
             settings_monospaced_font.toggle()
             config.monospacedFont = settings_monospaced_font.isChecked
-            updateWidgets()
         }
     }
 
@@ -185,7 +183,6 @@ class SettingsActivity : SimpleActivity() {
             RadioGroupDialog(this@SettingsActivity, items, config.fontSizePercentage) {
                 config.fontSizePercentage = it as Int
                 settings_font_size.text = getFontSizePercentText(config.fontSizePercentage)
-                updateWidgets()
             }
         }
     }
@@ -204,7 +201,6 @@ class SettingsActivity : SimpleActivity() {
             RadioGroupDialog(this@SettingsActivity, items, config.gravity) {
                 config.gravity = it as Int
                 settings_gravity.text = getGravityText()
-                updateWidgets()
             }
         }
     }

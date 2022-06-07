@@ -19,7 +19,6 @@ import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.MainActivity
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.getPercentageFontSize
-import com.simplemobiletools.notes.pro.extensions.updateWidgets
 import com.simplemobiletools.notes.pro.helpers.MyMovementMethod
 import com.simplemobiletools.notes.pro.helpers.NOTE_ID
 import com.simplemobiletools.notes.pro.helpers.NotesHelper
@@ -206,7 +205,6 @@ class TextFragment : NoteFragment() {
         if (newText != null && (newText != oldText || force)) {
             note!!.value = newText
             saveNoteValue(note!!, newText)
-            requireContext().updateWidgets()
         }
     }
 

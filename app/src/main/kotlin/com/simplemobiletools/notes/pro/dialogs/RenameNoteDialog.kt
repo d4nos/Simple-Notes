@@ -8,7 +8,6 @@ import com.simplemobiletools.notes.pro.R
 import com.simplemobiletools.notes.pro.activities.SimpleActivity
 import com.simplemobiletools.notes.pro.extensions.config
 import com.simplemobiletools.notes.pro.extensions.notesDB
-import com.simplemobiletools.notes.pro.extensions.updateWidgets
 import com.simplemobiletools.notes.pro.helpers.NotesHelper
 import com.simplemobiletools.notes.pro.models.Note
 import kotlinx.android.synthetic.main.dialog_new_note.view.*
@@ -80,7 +79,6 @@ class RenameNoteDialog(val activity: SimpleActivity, val note: Note, val current
                     }
                 }
 
-                activity.baseContext.updateWidgets()
             }
         }
     }
